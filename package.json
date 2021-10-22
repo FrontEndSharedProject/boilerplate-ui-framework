@@ -13,7 +13,7 @@
   "license": "MIT",
   "homepage": "https://github.com/carl-jin/boilerplate-ui-framework-site",
   "files": [
-    "build/dist/**/*",
+    "build/dist/**/*"
   ],
   "scripts": {
     "docusaurus": "docusaurus",

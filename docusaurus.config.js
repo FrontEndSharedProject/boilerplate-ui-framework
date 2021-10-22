@@ -5,7 +5,7 @@ const webpackAliasConfig = require("./scripts/webpack-alias");
 const scripts = [
   "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js",
 ];
-const stylesheets = ["/fonts/style.css"];
+const stylesheets = ["./fonts/style.css"];
 
 //  https://docusaurus.io/zh-CN/docs/api/docusaurus-config
 /** @type {import('@docusaurus/types').Config} */

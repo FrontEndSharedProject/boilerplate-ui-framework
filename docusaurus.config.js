@@ -12,8 +12,8 @@ const stylesheets = ["/fonts/style.css"];
 const config = {
   title: "Boilerplate",
   tagline: "一个用于快速搭建UI组件库的样板",
-  url: "https://carl-jin.github.io/boilerplate-ui-framework-site",
-  baseUrl: "/",
+  url: "https://carl-jin.github.io",
+  baseUrl: "/boilerplate-ui-framework-site/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
   onDuplicateRoutes: "error",

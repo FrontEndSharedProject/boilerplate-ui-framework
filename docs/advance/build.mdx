@@ -8,3 +8,46 @@ title: 打包
 ```shell
 $ yarn build
 ```
+
+## Output 文件说明
+
+执行完 `build` 命令后, 会在根目录中生成 `build` 目录
+
+该目录可以直接拖拽到服务器上 (或者部署) 来形成网站
+
+下面只介绍几个关键的文件夹
+
+```text
+📦build
+ ┣ 📂assets
+ ┣ 📂blog
+ ┣ 📂dist   //  dist 目录中包含的是 UI 组件库打包出来的文件, 这个文件夹可以直接用作与 npm 发布
+ ┃ ┣ 📂assets   //  存放 UI 组件库中用到的静态资源文件
+ ┃ ┃ ┗ 📂fonts  //  UI 组件库的字体图标
+ ┃ ┣ 📂js       //  types 目录
+ ┃ ┣ 📜boilerplate-ui-framework.css     //  UI 组件库的 css 文件
+ ┃ ┣ 📜boilerplate-ui-framework.es.js   //  UI 组件库的 Js 文件 ES Modules 模式
+ ┃ ┣ 📜boilerplate-ui-framework.umd.js  //  UI 组件库的 JS 文件 UMD 模式
+ ┃ ┣ 📜index.d.ts                       //  UI 组件库 JS 对应的 types 文件
+ ┃ ┣ 📜tailwind.config.js               //  UI 组件库用到的 tailwind 配置
+ ┃ ┗ 📜tailwindSafelist.json            //  UO 组件库使用 purge 后存留的 classlist
+ ┣ 📂docs
+ ┣ 📂fonts
+ ┣ 📂img
+ ┣ 📜.nojekyll
+ ┣ 📜404.html
+ ┣ 📜index.html     //  网站入口文件
+ ┗ 📜sitemap.xml
+```
+
+## 配置
+
+打包出来后文件的名称, 你可以修改 `package.json` 中对应的以下字段
+
+```json
+{
+  "name": "boilerplate-ui-framework", //  打包出来后文件的名称
+  "main": "build/dist/boilerplate-ui-framework.umd.js", //  指定入口文件
+  "module": "build/dist/boilerplate-ui-framework.es.js" //  指定 es module 引用时的入口
+}
+```

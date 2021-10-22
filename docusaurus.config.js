@@ -94,7 +94,7 @@ const config = {
                 to: "https://docusaurus.io/zh-CN/",
               },
               {
-                label: "Tailwindcss@1.9.6",
+                label: "Tailwindcss",
                 to: "https://tailwindcss.com/docs/installation",
               },
               {

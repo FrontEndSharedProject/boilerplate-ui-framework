@@ -14,3 +14,12 @@ docusaurus.config.js
 sidebars.js
 tailwind.config.js
 tsconfig.json
+
+build/assets
+build/blog
+build/docs
+build/fonts
+build/img
+build/.nojekyll
+build/index.html
+build/sitemap.xml

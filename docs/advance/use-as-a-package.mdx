@@ -3,4 +3,71 @@ sidebar_position: 5
 title: 打包后的使用
 ---
 
-待完善
+import Link from "@docusaurus/Link";
+
+:::tip
+
+建议先阅读 <Link to="/docs/advance/build"> 打包 </Link> 后再阅读该文档!
+
+:::
+
+## 使用
+
+### 远程调用
+
+假设你的网站使用的是 github page, 那么它对应部署后的网站地址为 `https://carl-jin.github.io/boilerplate-ui-framework-site/`
+
+那么你可以再 html 中这样引用 UI 库
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://carl-jin.github.io/boilerplate-ui-framework-site/dist/boilerplate-ui-framework.css"
+    />
+  </head>
+  <body class="tw">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!--如果你是通过这种方式引用的话, 请使用 umd 版本-->
+    <script src="https://carl-jin.github.io/boilerplate-ui-framework-site/dist/boilerplate-ui-framework.umd.js"></script>
+  </body>
+</html>
+```
+
+正如 <Link to="/docs/advance/build"> 打包 </Link> 文档中提到的, 打包后输出的文件其中包含以下两个文件
+
+```text
+tailwind.config.js               //  UI 组件库用到的 tailwind 配置
+tailwindSafelist.json            //  UO 组件库使用 purge 后存留的 classlist
+```
+
+如果你开发的项目中依然使用 tailwind 的话, 可以通过脚本将对应线上的这俩文件下载下来,
+
+用于达到 主题相同 和 带有 `blacklist` 的 `purge` 功能(使用 `tailwindSafelist.json` 当成你的 `blacklist` 作为打包)
+
+### npm 安装
+
+如果你的 UI 组件库发布到了 npm 上, 那么使用起来就更加简单了
+
+```typescript title="main.ts"
+//  引入 css 文件
+import "boilerplate-ui-framework/dist/boilerplate-ui-framework.css";
+
+//  使用 js 文件
+import { useCard } from "boilerplate-ui-framework";
+```
+
+如果你想合并 tailwind 配置的话
+
+```javascript title="tailwind.config.js"
+{
+  extends: "node_modules/boilerplate-ui-framework/dist/tailind.config.js",
+  //  继续你自己的配置
+  purge:{
+    blacklist:require('boilerplate-ui-framework/dist/tailwindSafelist.json')
+  }
+}
+```

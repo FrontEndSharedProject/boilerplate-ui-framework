@@ -39,11 +39,6 @@ $ npm run serve
 
 到此处已经成功运行起来该项目了, 是不是非常简单!
 
-```shell title="/src/components/HelloCodeTitle.js"
-function HelloCodeTitle(props) {
-  return <h1>你好，{props.name}</h1>;
-}
-```
 
 ## 项目结构与介绍
 

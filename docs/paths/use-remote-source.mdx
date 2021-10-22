@@ -1,0 +1,69 @@
+---
+sidebar_position: 2
+title: 使用线上的资源文件
+---
+
+# 起因
+
+大部分情况下, 我们需要使用开源库来解决解决 UI 交互, 比如常见的 'jquery' 和 'lazyload.js'
+
+## 引入
+
+要想将这些资源文件引入到文档中, 且在 UI 组件库中调用, 只需按以下配置即可
+
+让我们先进入根目录的 `docusaurus.config.js` 文件
+
+```javascript title="docusaurus.config.js"
+//  在下面这个数组中可以添加远程的 js 文件
+//  也可以加载本地的 js 文件, 但是这个文件需要放到 static 目录下
+const scripts = [
+  "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js",
+];
+
+//  在下面这个数组添加远程 css 文件
+//  这里也可以加载本地的 css 文件
+//  注意, 请不要删除 "/fonts/style.css"
+const stylesheets = ["/fonts/style.css"];
+```
+
+## 配置 typescript 声明
+
+如果我们引用的远程 js 文件, 能搜索到对应的 types 包的话([点击我进行搜索](https://www.typescriptlang.org/dt/search?search=)) 可以通过 npm 安装对应 types
+
+安装完成后即可使得该 js 支持 typescript 的功能
+
+如果没有找到对应 types 包, 那么只需在下面这个文件进行配置即可
+
+比如我们引用了一个 `nanoscroller` 插件, 假设该插件还未发布对应 `types`.
+
+此时我们直接使用以下代码时, typescript 会警告你(你也可以不管)无法找到 `nanoscorller` 这个东西
+
+```javascript
+$().nanoscroller();
+```
+
+我们只需要来到 `types/global.d.ts` 中, 进行类型声明即可
+
+```typescript
+declare global {
+  //  添加 window 上的全局变量
+  interface Window {
+    //  如果我们想在 window 上自定义一个变量
+    //  只需要这样写
+    myData: any;
+  }
+  //  添加 JQuery 实例方法
+  interface JQuery {
+    //  此时 nanoscroller 是实例方法, 也就是通过 $().nanoscroller() 掉用的
+    //  那么我们只需要这样写, 即可
+    nanoscroller(options?: any): void;
+  }
+  //  添加 JQuery 工具方法
+  interface JQueryStatic {
+    //  如果我们安装的是 `Velocity`, 那么它将会是一个 工具方法,
+    //  也就是通过 $.Velocity() 进行调用
+    //  那么我们需要这样写
+    Velocity(options: any): void;
+  }
+}
+```

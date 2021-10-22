@@ -1,0 +1,223 @@
+---
+sidebar_position: 1
+title: Card 组件
+---
+
+import Link from "@docusaurus/Link";
+import "@UI/scss/components/Card.scss";
+
+# Card 组件
+
+<!---
+ 在此处编写 Card 的 Dom 结构, 用于给用户演示 Card 具体排出来的效果
+ 你也可以写 Dom 结构, 也可以使用 React 处理 Dom 结构
+ 但是请注意这里都是用 jsx 语法处理的
+
+ 为了避免 Tailwind 与其他文件中的 class 名冲突, 这里使用了作用域功能
+ 因此如果你想使用 Tailwind 组件, 请在外围添加 class="tw"
+ https://tailwindcss.com/docs/configuration#important
+-->
+
+> 该组件是用于演示使用
+
+<Link to="/docs/paths/create-a-component">请点击查看这里</Link>
+
+## 基本卡片
+
+<section className="tw">
+  <div className="max-w-sm rounded overflow-hidden shadow-lg mx-auto my-8 v-card">
+    <img
+      className="w-full"
+      src="https://tailwindcss.com/img/card-top.jpg"
+      alt="Sunset in the mountains"
+    />
+    <div className="px-6 py-4">
+      <div className="font-bold text-xl mb-2">The Coldest Sunset</div>
+      <p className="text-gray-600 text-base">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus
+        quia, nulla! Maiores et perferendis eaque, exercitationem praesentium
+        nihil.
+      </p>
+    </div>
+    <div className="px-6 py-4">
+      <span className="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-600 mr-2">
+        #photography
+      </span>
+      <span className="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-600 mr-2">
+        #travel
+      </span>
+      <span className="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-600">
+        #winter
+      </span>
+    </div>
+  </div>
+</section>
+
+```html
+<div class="max-w-sm rounded overflow-hidden shadow-lg mx-auto my-8">
+  <img
+    class="w-full"
+    src="https://tailwindcss.com/img/card-top.jpg"
+    alt="Sunset in the mountains"
+  />
+  <div class="px-6 py-4">
+    <div class="font-bold text-xl mb-2">The Coldest Sunset</div>
+    <p class="text-gray-600 text-base">
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus
+      quia, nulla! Maiores et perferendis eaque, exercitationem praesentium
+      nihil.
+    </p>
+  </div>
+  <div class="px-6 py-4">
+    <span
+      class="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-600 mr-2"
+    >
+      #photography
+    </span>
+    <span
+      class="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-600 mr-2"
+    >
+      #travel
+    </span>
+    <span
+      class="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-600"
+    >
+      #winter
+    </span>
+  </div>
+</div>
+```
+
+## React 函数组件渲染
+
+:::tip
+
+在查看源代码之前, 请确保你对 函数组件 与 class 组件的区别有所了解
+
+[https://zh-hans.reactjs.org/docs/components-and-props.html#function-and-class-components](https://zh-hans.reactjs.org/docs/components-and-props.html#function-and-class-components)
+
+:::
+
+<!---
+你不应该在 mdx 文件中写 React 的组件
+该文件应该只是用于 调用 React 组件
+在 src/components 这个文件下编写你需要渲染给用户看的 React 组件, 然后再此处调用
+此处这样写只是一个例子
+-->
+
+import { Card, CardData } from "@/components/Card";
+const cardItem = CardData[0];
+
+<section className="tw">
+  <Card
+    title={cardItem.title}
+    info={cardItem.info}
+    poster={cardItem.poster}
+    tags={cardItem.tags}
+  />
+</section>
+
+```html
+<div class="max-w-sm rounded overflow-hidden shadow-lg mx-auto my-8 v-card">
+  <img
+    class="w-full"
+    src="https://tailwindcss.com/img/card-top.jpg"
+    alt="标题"
+  />
+  <div class="px-6 py-4">
+    <div class="font-bold text-xl mb-2">标题</div>
+    <p class="text-gray-600 text-base">描述</p>
+  </div>
+  <div class="px-6 py-4">
+    <span
+      class="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-600 mr-2"
+      >#标签1</span
+    ><span
+      class="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-600 mr-2"
+      >#标签2</span
+    >
+  </div>
+</div>
+```
+
+## React Class 组件渲染
+
+import { CardList } from "@/components/Card";
+
+<section className="tw">
+  <CardList data={CardData} />
+</section>
+
+```html
+<div class="card-list flex flex-row">
+  <!--遍历开始-->
+  <div class="m-2">
+    <div class="max-w-sm rounded overflow-hidden shadow-lg mx-auto my-8 v-card">
+      <img
+        class="w-full"
+        src="https://tailwindcss.com/img/card-top.jpg"
+        alt="标题0"
+      />
+      <div class="px-6 py-4">
+        <div class="font-bold text-xl mb-2">标题0</div>
+        <p class="text-gray-600 text-base">描述0</p>
+      </div>
+      <div class="px-6 py-4">
+        <span
+          class="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-600 mr-2"
+          >#Tag0</span
+        ><span
+          class="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-600 mr-2"
+          >#TAG-next0</span
+        >
+      </div>
+    </div>
+  </div>
+  <!--遍历结束-->
+</div>
+```
+
+## 带 js 交互的 React 组件
+
+<section className="tw">
+  <CardList id="CardEvent" handleJs={true} data={CardData} />
+</section>
+
+```html title="html"
+<div class="card-list flex flex-row mb-6">
+  <!--遍历开始-->
+  <div class="m-2">
+    <div class="max-w-sm rounded overflow-hidden shadow-lg mx-auto my-8 v-card">
+      <img
+        class="w-full"
+        src="https://tailwindcss.com/img/card-top.jpg"
+        alt="标题3"
+      />
+      <div class="px-6 py-4">
+        <div class="font-bold text-xl mb-2">标题3</div>
+        <p class="text-gray-600 text-base">描述3</p>
+        <button
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+          我是可以点击的 Button 3
+        </button>
+      </div>
+      <div class="px-6 py-4">
+        <span
+          class="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-600 mr-2"
+          >#Tag3</span
+        ><span
+          class="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-600 mr-2"
+          >#TAG-next3</span
+        >
+      </div>
+    </div>
+  </div>
+  <!--遍历结束-->
+</div>
+```
+
+```typescript title="JS 调用插件"
+import { handleCard } from "@UI/js/components/card";
+handleCard(document.querySelector(".card-list") as HTMLDialogElement);
+```

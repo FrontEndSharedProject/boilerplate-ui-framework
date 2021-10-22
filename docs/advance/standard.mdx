@@ -1,0 +1,143 @@
+---
+sidebar_position: 2
+title: 命名与代码风格
+---
+
+## 中文文档文案排版
+
+统一中文文案、排版的相关用法，降低团队成员之间的沟通成本，增强网站气质。
+
+**强烈建议编写文档之前先阅读 [中文文案排版指北](https://github.com/mzlogin/chinese-copywriting-guidelines) **
+
+## 代码风格
+
+代码风格依然采用 [Prettier](https://prettier.io/) 且使用默认配置
+
+## 文件命名规范
+
+文件命名整体使用 小驼峰 与 大驼峰命名规则, 请**不要**使用 串烧式命名
+
+```text
+✅ UI/js/components/CardList/index.ts
+✅ UI/js/components/CardList.ts
+✅ UI/scss/components/CardList.scss
+
+❌ UI/js/components/card-list/index.ts
+❌ UI/js/components/card_list/index.ts
+❌ UI/js/components/card-list.ts
+❌ UI/js/components/card_list.ts
+```
+
+### 属于 components 的文件需要大写开头
+
+如我们要写一个 Button 的 UI 组件, 那么它对应的 js 和 css 代码文件命名应为
+
+```text
+✅ UI/js/components/CardList.ts
+✅ UI/scss/components/CardList.scss
+```
+
+你可以简单的理解 `components` 下面的子级 文件/文件夹 都需要进行首字母大写 (index 除外)
+
+如果你的业务需求过于复杂, 导致代码要拆分成多个文件, 那么可以在 `compoents` 下面创建对应文件结构
+
+```text
+✅ UI/js/components/CardList/index.ts
+✅ UI/js/components/CardList/types.ts
+```
+
+关于是否都需要创建 组件文件夹, 这个因情况而定, 如果该组件只有一个文件, 那么无需创建 组件文件夹.
+
+但是如果你想保持统一, 即使一个文件也创建了组件文件夹, 这也是可以的
+
+### class 命名
+
+class 命名采用 ** 串烧式 ** 命名法
+
+```scss
+.v-card-name {
+}
+.v-button-list {
+}
+```
+
+### js 变量命名
+
+采用 小驼峰 命名法
+
+```
+let cardName = ''
+let cardList = ''
+
+const getName = function(){}
+
+function handleEvent(){}
+```
+
+常量需要首字母大写
+
+```
+const Name = ""
+```
+
+类命名需要以大写字母开头
+
+```typescript
+class ButtonGroup extend Component {
+
+}
+```
+
+### typescript
+
+尽量不要维护字符串, 采用 `enum` 处理
+
+```typescript
+enum ECardStatus {
+  ACTIVE = "active",
+  DISABLED = "disabled",
+}
+```
+
+类使用 大驼峰 命名法
+
+```
+❌ class foo {}
+✅ class Foo {}
+```
+
+类成员（变量、方法） 使用 小驼峰
+
+```
+❌
+class Foo {
+  Bar: number;
+  Baz(): number {}
+}
+
+
+✅
+class Foo {
+  bar: number;
+  baz(): number {}
+}
+```
+
+接口使用 大驼峰命名法 且不能在前面加 **I**
+
+```
+❌
+interface IFoo {
+  Bar: number;
+  Baz(): number;
+}
+
+
+✅
+interface Foo {
+  bar: number;
+  baz(): number;
+}
+```
+
+尽量避免形成 anytype 的情况, 任何地方解决不了 就使用 any 类型代替, 这是不对的做法(某些特殊情况除外)

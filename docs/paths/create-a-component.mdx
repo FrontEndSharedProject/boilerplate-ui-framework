@@ -1,0 +1,326 @@
+---
+sidebar_position: 1
+title: 创建一个组件
+---
+
+import Link from "@docusaurus/Link";
+
+# 创建一个组件
+
+## 创建对应文档页面
+
+以下我们假设要创建一个`带点击事件的 Card`
+
+### 创建文件
+
+在 docs 目录下创建对应 md 文件, 如果你需要使用到 React 处理 Dom 结构, 请创建 <Link to="/docs/advance/mdx">mdx 文件</Link>
+:::tip
+如果你仅仅是编写文档, 而不需要使用 React 处理 Dom 节点的话, 使用 .md 文件也可以
+:::
+
+**<Link to="/docs/advance/standard">文件创建请遵循命名规则</Link>**
+
+````mdxjs title="docs/components/card.mdx"
+---
+sidebar_position: 1
+title: Card 组件
+---
+
+这个文件中我们可以自己书写 html 代码 (注意必须是 jsx 语法的 html 代码)
+如:
+<section className="v-card">.....</section>
+
+书写展示给用户的代码块. 这里需要注意, 展示给用户的代码块, 请不要使用 jsx 语法!
+\```html
+<section class="v-card">.....</section>
+\```
+
+当然呈现给用户用于演示的 DOM 结构可以通过 React 组件生成, 因此我们可以直接调用
+(下面会提到如何创建 React 组件)
+
+如下面这个例子
+import { Card, CardData } from "@/components/Card";
+const cardItem = CardData[0];
+
+<section className="tw">
+  <Card
+    title={cardItem.title}
+    info={cardItem.info}
+    poster={cardItem.poster}
+    tags={cardItem.tags}
+  />
+</section>
+
+我们也可以在文档运行 UI 组件的 JS 代码部分 (下面会提到)
+
+# 强烈建议阅读下面这个例子
+/docs/components/Card/index.mdx
+
+````
+
+## 创建 React 组件(用于渲染 DOM 展示给用户看)
+
+:::tip
+如果你的组件 DOM 结构及其的简单, 不需要 JS 逻辑处理, 就可以展示给用户, 那么这一步你大可跳过
+:::
+
+新建一个 Card 对应的 React 组件,
+
+该文件主要是提供 React 组件给 mdx 文档中调用后, 展示给用户看的.
+
+### 创建文件
+
+我们来创建这个文件 `src/components/Card/index.tsx`
+
+```tsx title="src/components/Card/index.tsx"
+//  强烈建议阅读该文件源码
+
+//  你可以在此处模拟数据, 方便在文档中遍历数据出来
+export const CardData: Card[] = new Array(4)
+  .fill("")
+  .map((value, key): Card => {
+    return {
+      title: `标题${key}`,
+      info: `描述${key}`,
+      poster: `https://tailwindcss.com/img/card-top.jpg`,
+      tags: [`Tag${key}`, `TAG-next${key}`],
+    };
+  });
+
+//  也可以在此处编写 function 组件
+//  https://zh-hans.reactjs.org/docs/components-and-props.html#function-and-class-components
+export const Card = ({ title, info, poster, tags, showBtn, index }) => {
+  return (
+    //  ... html 代码
+  );
+};
+
+//  也可以编写 class 组件
+export class CardList extends React.Component<props,state> {
+
+  render() {
+    return (
+     // ... html 代码
+    );
+  }
+}
+```
+
+## 创建用于文档的 scss 文件
+
+:::caution
+
+该文件为可选项, 如果你想控制 UI 组件在文档中展现的效果时, 才需要该文件
+
+比如, 我们想 UI 组件在文档中展现的同时, 将其父级的 container 加个边框
+
+或者加个背景色, 又或者调整下宽度, 都可以再该文件中处理
+
+:::
+
+### 创建文件
+
+我们来创建这个文件 `src/components/Card/style.scss`
+
+```scss title="src/components/Card/style.scss"
+//  注意这个文件中的样式, 不会包含在打包后的 UI 组件库中
+//  它只能影响 文档中 的呈现形式
+.card-list {
+  border: 1px solid #f20 !important;
+  //  在这里, 你也可以用 Tailwind 提供的 utilities
+  @apply bg-white;
+}
+```
+
+### 引用
+
+然后让我们在下面这个文件中引用它
+
+```tsx title="src/components/Card/index.tsx"
+import "./style.scss";
+```
+
+## 创建 UI 组件库中的 scss 文件
+
+:::tip
+
+此文件非必须
+
+如果我们能使用 tailwind 实现 UI, 那么就尽量使用 tailwind
+
+如果实在遇到解决不了的 UI 需求, 则可以创建这个问题
+
+:::
+
+该文件会包含在 UI 组件库打包后的文件当中
+
+### 创建文件
+
+我们新建 Card 对应的 scss 文件
+
+`UI/scss/components/Card.scss`
+
+```scss title="UI/scss/components/Card.scss"
+.v-card {
+  border: 1px solid #000 !important;
+  @apply bg-gray-200;
+
+  &:hover {
+    @apply bg-black;
+    @apply text-white;
+  }
+}
+```
+
+### 注意
+
+** 创建的 UI 组件 scss 代码, 需要在同级目录的 index.scss 中引用 **
+
+### 引用
+
+这一步的目的是为了让 UI 组件库打包时包含该文件
+
+```scss title="/UI/scss/components/index.scss"
+@import "Card";
+```
+
+然后让我们回到文档文件中引用即可
+
+`/docs/components/card.mdx`
+
+```mdxjs title="/docs/components/card.mdx"
+import "@UI/scss/components/Card.scss";
+```
+
+> 该文件未在 custom.scss 中引用
+
+> 主要因为 scss 依赖关系, 因为 custom.scss 中引用了 tailwind
+
+> 如果我们在 custom.scss 中引用了该文件, 那么在修改 Card.scss 时
+
+> 刷新就特别慢, 达到了 5s 而直接在 文档中引用反而快了很多
+
+## 创建 UI 库对应的 JS 逻辑代码
+
+:::tip
+
+此文件非必须 如果没有 JS 逻辑则不需要创建该文件
+
+:::
+
+该文件会包含在 UI 组件库打包后的文件当中
+
+### 创建文件
+
+我们来创建这个文件 `UI/js/compoments/Card/index.ts`
+
+```typescript title="UI/js/compoments/Card/index.ts"
+export function handleCard(el: HTMLDivElement): void {
+  //  js 代码逻辑
+  //  这里你可以创建 class, 也可以用 function 简单处理
+  //  最后只需要把业务逻辑代码暴露出去即可
+}
+```
+
+### 注意事项
+
+** 创建完该文件后我们需要在两个地方引用它 **
+
+### 引用及调用
+
+首先我们来到同级目录下的, 添加引用
+
+这一步的目的是让 Card 打包在 UI 组件库中
+
+`UI/js/compoments/index.ts`
+
+```typescript title="UI/js/compoments/index.ts"
+//  改行代码将 Card 文件中所有的 export 再次导出出去
+//  这样用户只需要引用 @UI 即可获取所有库
+//  这里是 esmodule 知识
+export * from "./Card";
+```
+
+接下来我们就可以在 "文档中" 调用刚刚我们写的 `handleCard` 方法,
+
+展现给用户 JS 执行后的效果
+
+我们来到这个文件中 `src/components/Card/index.tsx`
+
+添加引用与调用
+
+```tsx title="src/components/Card/index.tsx"
+import { handleCard } from "@UI";
+
+//  强烈建议查看源代码
+
+//  在 class 组件中调用
+export class CardList extends React.Component<props, state> {
+  protected box: RefObject<HTMLDivElement>;
+
+  constructor(props) {
+    super(props);
+
+    //  与 vue 不同, 如果要保存 ref 我们需要先实例化一个 ref 对象
+    this.box = React.createRef();
+  }
+
+  //  该方法相当于 vue 的 mount 生命周期事件
+  componentDidMount() {
+    //  调用 UI 组件库
+    handleCard(this.box.current);
+  }
+
+  render() {
+    return <div ref={this.box} />;
+  }
+}
+
+//  我们也可以在 function 组件中调用
+//  这里就不详细介绍了, 如果用过 vue3 的话,
+//  这种 functional 的写法应该是再熟悉不过了
+export const Card = ({ title, info, poster, tags, showBtn, index }) => {
+  const box = useRef(null);
+
+  useEffect(() => {
+    handleCard(box.current);
+
+    return () => {
+      //  destroy event
+    };
+  });
+
+  return <div ref={box}></div>;
+};
+```
+
+## 总结
+
+如果我们要创建一个 `card` UI 组件, 那么可能会需要以下 5 个文件,
+
+(其中部分是可选的)
+
+1. `docs/components/card.mdx` (必须)
+2. `src/components/Card/index.tsx` (如果文档中的 DOM 结构简单时 不需要)
+3. `src/components/Card/style.scss` (如果不需要针对 文档 进行样式处理的话 不需要)
+4. `UI/scss/components/Card.scss` (如果 Tailwind 能解决 UI 需求的话 不需要)
+5. `UI/js/compoments/Card/index.ts` (如果没有 Js 业务逻辑的话 不需要)
+
+<br />
+
+### 引用关系
+
+1. `docs/components/card.mdx` 中
+
+引用 `src/components/Card/index.tsx`
+引用 `UI/scss/components/Card.scss`
+
+2. `src/components/Card/index.tsx` 中
+
+引用 `src/components/Card/style.scss`
+引用 `UI/js/compoments/Card/index.ts`
+
+### 注意事项
+
+1. 创建的 UI 组件 scss 代码, 需要在同级目录的 `UI/scss/compoments/index.scss` 中引用
+2. 创建的 UI 组件 JS 代码, 需要在 `UI/js/compoments/index.ts` 文件中引用

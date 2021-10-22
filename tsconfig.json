@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Docusaurus v2",
+  "docs": "https://v2.docusaurus.io/docs/typescript-support",
+
+  "compilerOptions": {
+    "allowJs": true,
+    "sourceMap": false,
+    "esModuleInterop": true,
+    "declaration": true,
+    "jsx": "react-jsx",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "noImplicitAny": true,
+    "moduleResolution": "node",
+    "types": [
+      "jquery",
+      "node",
+      "@docusaurus/module-type-aliases",
+      "@docusaurus/theme-classic"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@site/*": ["./*"],
+      "@/*": ["./src/*"],
+      "@UI": ["./UI"],
+      "@UI/*": ["./UI/*"]
+    }
+  },
+  "include": ["jquery", "UI/types/global.d.ts", "src/", "UI/"],
+  "exclude": ["node_modules", "build", ".docusaurus", "scripts", "plugins"]
+}

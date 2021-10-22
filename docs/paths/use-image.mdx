@@ -1,0 +1,24 @@
+---
+sidebar_position: 3
+title: 在文档中显示图片
+---
+
+import Image from "@site/static/img/logo.png";
+
+# 显示图片
+
+<img src={Image} alt="" className="" />
+<br />
+
+如果我们想在文档中显示本地图片, 只需要将 图片放到 `static/img` 目录后, 在文档中引用即可
+
+```jsx
+import Image from "@site/static/img/logo.png";
+<img src={Image} alt="" />;
+```
+
+你也可以这样写
+
+```markdown
+![img][/static/img/logo.png]
+```

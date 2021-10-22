@@ -1,0 +1,16 @@
+.docusaurus
+docs
+node_modules
+plugins
+scripts
+src
+static
+types
+UI
+.gitignore
+.npmignore
+babel.config.js
+docusaurus.config.js
+sidebars.js
+tailwind.config.js
+tsconfig.json

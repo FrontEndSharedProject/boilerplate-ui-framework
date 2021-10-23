@@ -1,10 +1,13 @@
 const colors = require("tailwindcss/colors");
 
 module.exports = {
+  mode:'jit',
+  purge: [
+    './docs/**/*.{md,mdx}',
+    './src/**/*.{js,jsx,ts,tsx}',
+    './UI/**/*.{js,jsx,ts,tsx}',
+  ],
   important: ".tw",
-  purge: {
-    enabled: false,
-  },
   darkMode: false, // or 'media' or 'class'
   theme: {
     //  https://docs.tailwindchina.com/docs/customizing-colors#-1
@@ -13,6 +16,14 @@ module.exports = {
       gray: {
         ...colors.gray,
       },
+    },
+    truncate: {
+      lines: {
+        3: '3',
+        4: '4',
+        5: '5',
+        6: '6',
+      }
     },
     extend: {},
   },

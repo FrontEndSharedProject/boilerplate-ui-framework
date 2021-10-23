@@ -1,0 +1,32 @@
+---
+sidebar_position: 7
+title: JIT 模式
+---
+因为Tailwind CSS的设计原理，在开发时会先帮你生成一堆的class，CSS文件最少3MB起步🤷‍♂️。随着开发下去需要的Variants只会变得越来越多，开发中产生的CSS文件甚至变成10-20 MB都是可能的，还会连带拖慢载入的时间。
+
+这时候JIT模式就派上用场啦！Tailwind CSS 2.0正式上线的Just-in-Time (简称JIT )编译器，可以在写HTML时及时编译CSS，大幅缩短编译时间，以及缩小产生的文件大小。
+
+## Just-in-Time 模式的新功能
+
+1. 超快速的编译时间 。 原本Tailwind CLI编译需要3-8秒，在 JIT模式 下仅需 0.8秒 。
+2. 直接使用任意Variants 。 不用再烦恼需不需要开 active 、 focus 或 disabled 等。
+3. 任意值CSS class 。 可以直接在HTML里写像 top-[247px] 这样的class，将会自动生成。 而且也可以使用Variants： lg:top-[587px] 。
+4. 在develop和production产生一样的CSS 。 不需要烦恼上线后会不会有class灵异的消失~
+5. 在开发时有更好的浏览器效能 。 因为develop和production的CSS大小一样小，本地预览时不会出现10-20 MB的CSS，开启相关开发工具也不会载入很久。
+
+## 启用JIT 模式
+
+要开启非常简单，只需要在 tailwind.config.js 里把 mode 设成 'jit' 就行了
+
+```javascript
+module.exports = {
+  mode: 'jit',
+  theme: {
+    // ...
+  }
+  // ...
+}
+```
+
+## 新功能
+[https://lucas-yang.vercel.app/post/tailwindcss-jit/](https://lucas-yang.vercel.app/post/tailwindcss-jit/)

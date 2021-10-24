@@ -58,10 +58,10 @@ const textType = plugin(
         fontSize: fontSizeArr[0] + "px",
         lineHeight: lineHeight + "em",
         fontWeight: fontWeight,
-        [`@media(min-width: ${mdValue})`]: {
+        [`@media (min-width: ${mdValue})`]: {
           fontSize: fontSizeArr[1] + "px",
         },
-        [`@media(min-width: ${xlValue})`]: {
+        [`@media (min-width: ${xlValue})`]: {
           fontSize: fontSizeArr[2] + "px",
         },
       };

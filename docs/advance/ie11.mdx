@@ -1,0 +1,140 @@
+---
+sidebar_position: 8
+title: IE 11 兼容
+---
+
+## 兼容原则
+
+该项目基于 Docusaurus@v2 与 Tailwind@v2 版本搭建, 很可惜它俩都放弃了对 IE 11 的支持.
+
+所以该项目对 IE 11 支持的原则为
+
+1. **js 代码运行不报错, 保证 ie 11 的用户能正常执行业务流程**
+2. **UI 组件 css 代码尽量兼容 ie 11, 尽量避免页面排版错乱**
+3. **ie 11 用户可以适当的牺牲一些加载速度和页面效果**
+
+<br />
+
+:::danger Docusaurus 使用了 css var 导致再 ie 11 访问该 docs 网站时, 导致样式错乱.
+这个现在无办法解决除非 Docusaurus 修改自己的源代码.
+
+Tailwind 打包出来的 UI 组件库, 是可以支持 ie 11
+
+这也就意味着, 该 docs 网站不支持 ie 11, 但是 UI 组件库支持 ie 11,
+
+如果你的网站仅仅只是引用 UI 组件库, 那么恭喜你, 你的网站支持 ie 11
+:::
+
+## 原理
+
+### js
+
+让我们来先看看如何支持 ie 11,
+
+针对 js 部分, 在打包命令执行, 会将 `build` 目录中所有的 `.js` 文件 (ESModule 文件除外),
+
+全部通过 `Babel` 转换, 达到支持 ie 11 的目录
+
+源代码请参考 `scripts/ie11.js`
+
+### css
+
+最头疼的莫过于 css 代码中的 var.
+
+这里尝试了兼容库都没有办法达到完美兼容, 参考
+
+[postcss-custom-properties](https://github.com/postcss/postcss-custom-properties), [css-vars-ponyfill](https://www.npmjs.com/package/css-vars-ponyfill)
+
+这些库运行的原理, 无非也就是将 css 文件转换为 AST 树, 然后将用到 `var()` 的属性替换为对应的 `--` 变量.
+
+但是这种思路无法解决下面这种情况
+
+```html
+<style>
+  .col-3 {
+    --width: 30px;
+  }
+  .col-4 {
+    --width: 40px;
+  }
+
+  .col {
+    width: var(--width);
+  }
+</style>
+<div class="col col-3"></div>
+<div class="col col-4"></div>
+```
+
+如上述代码一样, 此时就判断 `.col` 样式名对应的 `--width` 到底是多少
+
+但是恰恰 Docusaurus 源码中大量采用了这种写法, 导致转换后的效果不尽人意
+
+相反 Tailwind 的代码, 转换率就非常的高. 因此我们应该尽量避免上面的这种写法
+
+```css
+.tw .active\:scale-95:active {
+  --tw-scale-x: 0.95;
+  --tw-scale-y: 0.95;
+  -webkit-transform: var(--tw-transform);
+  transform: var(--tw-transform);
+}
+```
+
+因此在打包时会通过 `postcss-css-variables` 库将 UI 组件库生成一份转换过 `css var` 的文件, 其名字为 `[name].ie11.css`
+
+这样的话只需要判断用户是 ie 11 浏览器, 引用该 css 文件即可, 对应的使用方法请往下看
+
+源代码请参考 `scripts/ie11.js`
+
+## 使用
+
+如果你的项目需要兼容 ie 11. 请添加以下代码到你的 html 文件中
+
+### js
+
+```javascript title="header.html"
+//  以下这段代码是加载 ie 11 对应需要的 polyfill 的文件
+//  请保证它在你的业务逻辑 js 执行前加载
+//  这样就能保证 js 的部分支持 ie 11
+(function () {
+  var u = navigator.userAgent;
+
+  if (/MSIE \d|Trident.*rv:/.test(u)) {
+    var polyfillScript = document.createElement("script");
+    polyfillScript.type = "text/javaScript";
+    polyfillScript.src =
+      "https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.12.1/polyfill.min.js";
+    document.getElementsByTagName("head")[0].appendChild(polyfillScript);
+  }
+})();
+```
+
+### css
+
+现在我们来看看 css 部分的兼容
+
+```javascript title="header.html"
+(function () {
+  //  在这里需要修改成你的 ui 组件库打包出来的 css 文件
+  var uiCssFileName = "boilerplate-ui-framework.css";
+  var u = navigator.userAgent;
+
+  if (/MSIE \d|Trident.*rv:/.test(u)) {
+    window.addEventListener("DOMContentLoaded", function () {
+      var links = document.querySelectorAll("link");
+
+      for (var i = 0; i < links.length; i++) {
+        var link = links[i];
+
+        if (~link.href.indexOf(uiCssFileName)) {
+          link.href = link.href.replace(
+            uiCssFileName,
+            uiCssFileName.replace(".css", ".ie11.css")
+          );
+        }
+      }
+    });
+  }
+})();
+```

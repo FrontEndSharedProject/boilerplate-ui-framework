@@ -1,26 +1,28 @@
 const lightCodeTheme = require("prism-react-renderer/themes/github");
 const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 const webpackAliasConfig = require("./scripts/webpack-alias");
+const isProd = process.env.NODE_ENV === "production";
 
 const scripts = [
   "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js",
 ];
-const stylesheets = ["./fonts/style.css"];
+const stylesheets = [];
 
+const baseUrl = "/boilerplate-ui-framework-site/";
 //  https://docusaurus.io/zh-CN/docs/api/docusaurus-config
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Boilerplate",
   tagline: "一个用于快速搭建UI组件库的样板",
   url: "https://carl-jin.github.io",
-  baseUrl: "/boilerplate-ui-framework-site/",
+  baseUrl: baseUrl,
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
   onDuplicateRoutes: "error",
   favicon: "/img/favicon.ico",
   noIndex: true,
-  scripts,
-  stylesheets,
+  scripts: [...[`${baseUrl}loadPolyfill.js`], ...scripts],
+  stylesheets: [...[`${baseUrl}fonts/style.css`], ...stylesheets],
   organizationName: "carl-jin", // Usually your GitHub org/user name.
   projectName: "UI-framework-boilerplate", // Usually your repo name.
   plugins: [

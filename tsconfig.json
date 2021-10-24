@@ -4,6 +4,8 @@
   "docs": "https://v2.docusaurus.io/docs/typescript-support",
 
   "compilerOptions": {
+    "target": "ES2015",
+    "module": "ESNext",
     "allowJs": true,
     "sourceMap": false,
     "esModuleInterop": true,

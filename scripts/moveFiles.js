@@ -21,4 +21,11 @@ const path = require("path");
     path.resolve(__dirname, "../", "build/dist/tailwind.config.js"),
     { copy: true }
   );
+
+  //  themeConfigs 文件
+  await mvdir(
+    path.resolve(__dirname, "../UI", "themeConfigs"),
+    path.resolve(__dirname, "../", "build/dist/themeConfigs"),
+    { copy: true }
+  );
 })();

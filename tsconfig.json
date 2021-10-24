@@ -29,5 +29,12 @@
     }
   },
   "include": ["jquery", "UI/types/global.d.ts", "src/", "UI/"],
-  "exclude": ["node_modules", "build", ".docusaurus", "scripts", "plugins"]
+  "exclude": [
+    "node_modules",
+    "build",
+    ".docusaurus",
+    "scripts",
+    "plugins",
+    "themeConfigs"
+  ]
 }

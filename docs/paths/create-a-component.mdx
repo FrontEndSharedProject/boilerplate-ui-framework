@@ -184,22 +184,6 @@ import "./style.scss";
 @import "Card";
 ```
 
-然后让我们回到文档文件中引用即可
-
-`/docs/components/card.mdx`
-
-```mdxjs title="/docs/components/card.mdx"
-import "@UI/scss/components/Card.scss";
-```
-
-> 该文件未在 custom.scss 中引用
-
-> 主要因为 scss 依赖关系, 因为 custom.scss 中引用了 tailwind
-
-> 如果我们在 custom.scss 中引用了该文件, 那么在修改 Card.scss 时
-
-> 刷新就特别慢, 达到了 5s 而直接在 文档中引用反而快了很多
-
 ## 创建 UI 库对应的 JS 逻辑代码
 
 :::tip
@@ -313,7 +297,6 @@ export const Card = ({ title, info, poster, tags, showBtn, index }) => {
 1. `docs/components/card.mdx` 中
 
 引用 `src/components/Card/index.tsx`
-引用 `UI/scss/components/Card.scss`
 
 2. `src/components/Card/index.tsx` 中
 

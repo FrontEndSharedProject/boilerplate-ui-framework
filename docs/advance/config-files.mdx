@@ -1,0 +1,97 @@
+---
+sidebar_position: 9
+title: 配置文件详解
+---
+
+import Link from "@docusaurus/Link";
+
+## tsconfig.json
+
+如果你需要修改卡 开发环境 和 生产环境 中的 `JS` 编译配置, 请修改这个文件
+
+:::note
+
+因为 JS 最终需要转换成 `es5` 的代码, 所以在打包完后会调用 `yarn run build:ie` 命令,
+
+进而执行 `/scripts/ie11.js` 从而达到将 `build` 目录下的 `js` 代码转换成 `es5`
+
+<Link to="/docs/advance/ie11">点击我查看 IE 11 兼容详情</Link>{" "}
+
+:::
+
+## tailwind.config.js
+
+你可以在这里完成 添加 `Utilities` , `Components` , 配置主题和添加插件, 都可以在这里完成.
+
+如果你要修改 `tailwind` 中的 `theme` 配置, 请修改 `UI/themeConfigs/theme.js` 这个文件
+
+如果你要添加 `Utilities` 请修改 `UI/themeConfigs/utilities.js` 这个文件
+
+如果你要添加 `Components` 请参考 `UI/themeConfigs/utilities.js` 这个文件
+
+如果你要添加自己写的插件 请将插件放到 `UI/themeConfigs` 这个文件夹下面
+
+## docusaurus.config.js
+
+你可以在这里配置整个网站的信息, 如 `title` , `logo` , `meta` 之类的
+
+## babel.config.js
+
+你可以在这里面配置整个项目中的 `babel`
+
+## scripts/ie11.js
+
+:::tip
+
+`scripts` 目录下存放的都是打包时的配置文件!
+
+:::
+
+你可以在这个文件中, 处理 ie11 的兼容逻辑 ( js 和 css ) 都在这里处理
+
+## scripts/moveFiles.js
+
+你可以在这里处理项目打包结束后, 需要 copy 那些文件到 dist 目录
+
+## scripts/postcss.config.js
+
+该文件只影响 UI 组件库中的 css 代码 (包括 tailwind )
+
+如果你想在 UI 组件库打包的过程中添加额外的 Postcss 配置, 从而影响最终的 css 编译结果
+
+可以在这个文件进行配置
+
+## scripts/tailwind.config.build.js
+
+该文件只影响打包时 tailwind 的配置, 它会继承于根目录下的 `tailwind.config.js` 文件.
+
+`tailwindSafelist.json` 也是在这个文件中生成的
+
+## scripts/tsconfig.dist.json
+
+该文件只影响打包时 typescript 的配置, 它会继承于根目录下的 `tsconfig.json` 文件.
+
+## scripts/vite.config.ts
+
+该文件是用于处理打包 UI 组件库的, 它只影响 UI 组件库的打包
+
+## scripts/webpack-alias.js
+
+这个文件只是用于处理 phpstorm 无法自动识别 alias 的问题
+请不要在该文件中配置 webpack!
+
+## plugins/docusaurus-plugin-sass
+
+:::tip
+
+plugins 文件夹下面的文件是用作与 npm 进行依赖安装的.
+
+如果你需修改完需要重新执行 `yarn install` 才能保证该文件被正确的安装到 `node_modules` 中
+
+:::
+
+该文件是让 `docusaurus` 支持 `sass` 文件
+
+## plugins/docusaurus-tailwindcss-loader
+
+该文件是让 docusaurus 支持 tailwind

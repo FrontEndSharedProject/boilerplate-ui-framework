@@ -1,0 +1,95 @@
+---
+sidebar_position: 6
+title: 主题配置
+---
+
+:::tip
+
+为了方便后期好维护, 请尽量使用 plugins 完成你对自定义 [Utilities](https://tailwindcss.com/docs/adding-new-utilities#using-a-plugin) 和 [Components](https://tailwindcss.com/docs/extracting-components#writing-a-component-plugin) 的需求
+
+:::
+
+## 过程
+
+在 `/UI/themeConfigs` 中配置的主题以及 `Utilities` 和 `Components` 将会在打包后
+
+一并输出到 `/build/dist/` 目录中 (与 UI 组件库同级), 这样能保证其他项目在安装 UI 库后, 依然能读取到相同的配置
+
+且 Tailwind 代码提示也能正常工作
+
+## 主题配置
+
+在下面代码中, 进行主题的配置, 该配置会与根目录中的 `tailwind.config.js` 合并
+
+```javascript title="/UI/themeConfigs/theme.js"
+const colors = require("tailwindcss/colors");
+
+module.exports = {
+  colors: {
+    ...colors,
+    gray: {
+      ...colors.gray,
+    },
+    custom: {
+      100: "#f20",
+    },
+  },
+  textType: {
+    h1: "28/36/44|1.2|700",
+    h2: "28/30/36|1.2|700",
+  },
+};
+```
+
+## Utilities
+
+在下面代码中配置你的 `Utilities`
+
+只需在 `addUtilities` 中传入一个 类型为 css-in-js[] 的值即可
+
+css-in-js 语法请参考 ([Css-in-js](https://tailwindcss.com/docs/plugins#css-in-js-syntax))
+
+:::tip
+
+为保证后期的扩展性, 请尽量使用以下方式实现自定义 Utilities
+
+:::
+
+```javascript title="/UI/themeConfigs/utilities.js"
+const plugin = require("tailwindcss/plugin");
+
+module.exports = plugin(function ({ addUtilities }) {
+  addUtilities([
+    {
+      ".btn": {
+        display: "inline-block",
+        "min-width": "214px",
+        "border-radius": "0.25rem",
+        "padding-top": "18px",
+        "padding-bottom": "18px",
+        "padding-left": "48px",
+        "padding-right": "48px",
+        "text-align": "center",
+        "transition-duration": "300ms",
+        "transition-timing-function": "linear",
+        ":hover": {
+          color: "#fff",
+          "text-decoration": "none",
+        },
+      },
+    },
+  ]);
+});
+```
+
+## Components
+
+:::tip
+
+如果你的样式代码需要有 `.tw` 的约束, 请使用 Utilities
+
+:::
+
+创建方式与上面的 `Utilities` 类似.
+
+[点击我参考官方文档](https://tailwindcss.com/docs/extracting-components#writing-a-component-plugin)

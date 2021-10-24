@@ -1,7 +1,5 @@
 const packageJson = require("../package.json");
 
-
-
 module.exports = {
   plugins: [
     require("postcss-import"),
@@ -17,5 +15,6 @@ module.exports = {
     require("autoprefixer")({
       overrideBrowserslist: packageJson.browserslist.production,
     }),
+    require('postcss-combine-media-query')(),
   ],
 };

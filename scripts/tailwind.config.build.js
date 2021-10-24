@@ -20,5 +20,3 @@ module.exports = {
     },
   },
 };
-
-// https://github.com/FullHuman/purgecss/blob/b77a4ddbe978291604c2dfdc2f6917fbffd17ed4/packages/postcss-purgecss/src/index.ts#L60

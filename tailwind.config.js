@@ -1,26 +1,22 @@
-const colors = require("tailwindcss/colors");
-
 module.exports = {
-  mode:'jit',
+  mode: "jit",
   purge: [
-    './docs/**/*.{md,mdx}',
-    './src/**/*.{js,jsx,ts,tsx}',
-    './UI/**/*.{js,jsx,ts,tsx}',
+    "./docs/**/*.{md,mdx}",
+    "./src/**/*.{js,jsx,ts,tsx}",
+    "./UI/**/*.{js,jsx,ts,tsx}",
   ],
   important: ".tw",
   darkMode: false, // or 'media' or 'class'
   theme: {
-    //  https://docs.tailwindchina.com/docs/customizing-colors#-1
-    colors: {
-      ...colors,
-      gray: {
-        ...colors.gray,
-      },
-    },
+    ...require("./UI/themeConfigs/theme"),
     extend: {},
   },
   variants: {
     extend: {},
   },
-  plugins: [require("@tailwindcss/line-clamp")],
+  plugins: [
+    require("@tailwindcss/line-clamp"),
+    require("./UI/themeConfigs/textType"),
+    require("./UI/themeConfigs/utilities"),
+  ],
 };

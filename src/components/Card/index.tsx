@@ -25,13 +25,13 @@ export const CardData: Card[] = new Array(4)
 
 export const Card = ({ title, info, poster, tags, showBtn, index }: Card) => {
   return (
-    <div className="max-w-sm rounded overflow-hidden shadow-lg mx-auto my-8 v-card">
+    <div className="v-card mx-auto my-8 max-w-sm rounded shadow-lg overflow-hidden">
       <img className="w-full" src={poster} alt={title} />
       <div className="px-6 py-4">
-        <div className="font-bold text-xl mb-2 text-gray-100">{title}</div>
+        <div className="mb-2 text-custom-100 text-type-h1">{title}</div>
         <p className="text-gray-600 text-base">{info}</p>
         {showBtn && (
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          <button className="px-4 py-2 text-white font-bold bg-blue-500 hover:bg-blue-700 rounded">
             我是可以点击的 Button {index}
           </button>
         )}
@@ -41,7 +41,7 @@ export const Card = ({ title, info, poster, tags, showBtn, index }: Card) => {
           return (
             <span
               key={tag}
-              className="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-600 mr-2"
+              className="inline-block mr-2 px-3 py-1 text-gray-600 text-sm font-semibold bg-gray-100 rounded-full"
             >
               #{tag}
             </span>

@@ -27,6 +27,12 @@ html[data-theme="dark"] .docusaurus-highlight-code-line {
   background-color: rgba(0, 0, 0, 0.3);
 }
 
+.navbar__link > span {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .markdown > h1 {
   font-size: var(--ifm-h1-font-size);
 }

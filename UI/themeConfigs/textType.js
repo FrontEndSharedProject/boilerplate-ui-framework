@@ -48,10 +48,6 @@ const textType = plugin(
     });
 
     //  开始生成 class
-    const md = `@media(min-width: ${mdValue})`;
-    const xl = `@media(min-width: ${xlValue})`;
-    let mdConfig = {};
-    let xlConfig = {};
     const cssInJs = {};
 
     //  添加 mobile 的样式
@@ -62,21 +58,14 @@ const textType = plugin(
         fontSize: fontSizeArr[0] + "px",
         lineHeight: lineHeight + "em",
         fontWeight: fontWeight,
-      };
-
-      mdConfig[keyName] = {
-        fontSize: fontSizeArr[1] + "px",
-      };
-
-      xlConfig[keyName] = {
-        fontSize: fontSizeArr[2] + "px",
+        [`@media(min-width: ${mdValue})`]: {
+          fontSize: fontSizeArr[1] + "px",
+        },
+        [`@media(min-width: ${xlValue})`]: {
+          fontSize: fontSizeArr[2] + "px",
+        },
       };
     });
-
-    //  这里需要等上面的执行完后再插入
-    //  涉及到 css 权重问题
-    cssInJs[md] = mdConfig;
-    cssInJs[xl] = xlConfig;
 
     addUtilities(cssInJs);
   },

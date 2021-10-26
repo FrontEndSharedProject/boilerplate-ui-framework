@@ -1,6 +1,6 @@
 {
   "extends": "../tsconfig.json",
-  "include": ["../UI/"],
+  "include": ["../UI/", "../static"],
   "exclude": ["node_modules", "themeConfigs"],
   "compilerOptions": {
     "allowJs": true,

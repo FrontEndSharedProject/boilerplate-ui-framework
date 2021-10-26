@@ -3,6 +3,7 @@
   "include": ["../UI/"],
   "exclude": ["node_modules", "themeConfigs"],
   "compilerOptions": {
+    "allowJs": true,
     "outDir": "../build/dist/",
     "types": []
   }

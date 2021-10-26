@@ -1,1 +1,3 @@
-console.log('run in global')
+(function () {
+  console.log("run in global");
+})();

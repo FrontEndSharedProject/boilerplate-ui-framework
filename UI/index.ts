@@ -1,3 +1,5 @@
-import './scss/index.scss'
+import "./scss/index.scss";
 
-export * from './js/index'
+export * from "./js/index";
+
+import "../static/global";

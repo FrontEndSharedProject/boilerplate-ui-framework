@@ -21,7 +21,10 @@ const config = {
   onDuplicateRoutes: "error",
   favicon: "/img/favicon.ico",
   noIndex: true,
-  scripts: [...[`${baseUrl}loadPolyfill.js`], ...scripts],
+  scripts: [
+    ...scripts,
+    ...[`${baseUrl}global.js`, `${baseUrl}loadPolyfill.js`],
+  ],
   stylesheets: [...[`${baseUrl}fonts/style.css`], ...stylesheets],
   organizationName: "carl-jin", // Usually your GitHub org/user name.
   projectName: "UI-framework-boilerplate", // Usually your repo name.

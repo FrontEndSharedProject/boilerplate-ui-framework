@@ -2,13 +2,14 @@
 //  因为 vite 使用 esbuild 不支持 ie 11
 //  但是 tsconfig.json 又和 docusaurus 复用
 //  这里需要通过以下代码, 将 js 转换为支持 es5
-
+const packageJson = require("../package.json");
 const babel = require("@babel/core");
 const path = require("path");
 const fs = require("fs");
 const glob = require("glob");
 const postcss = require("postcss");
 const cssvariables = require("postcss-css-variables");
+const autoprefixer = require("autoprefixer");
 
 const jsList = glob
   .sync(path.resolve(__dirname, `../build/**/*.js`))
@@ -55,7 +56,13 @@ console.log(`Start to transform css variables; total file ${cssList.length}`);
 
 cssList.map((filePath) => {
   const css = fs.readFileSync(filePath);
-  const output = postcss([cssvariables(/*options*/)]).process(css).css;
+  const output = postcss([
+    autoprefixer({
+      grid: 'autoplace',
+      overrideBrowserslist: packageJson.browserslist.production,
+    }),
+    cssvariables(/*options*/),
+  ]).process(css).css;
   fs.writeFileSync(filePath.replace(".css", ".ie11.css"), output, "utf-8");
   console.log(`transform succeed ${filePath}`);
 });

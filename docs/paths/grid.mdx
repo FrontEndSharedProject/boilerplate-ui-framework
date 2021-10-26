@@ -1,0 +1,77 @@
+---
+sidebar_position: 7
+title: Grid
+---
+
+export const Grid = () => {
+  return (
+    <div className="container border border-2 border-black">
+      <div className="row border border-2 border-red-400">
+        {[2, 2].map((value, key) => {
+          return (
+            <div className="col-24 md:col-12">
+              <div className="border border-2 border-blue-400">
+                {key + 1} of {value}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      <div className="row border border-2 border-red-400">
+        {[3, 3, 3].map((value, key) => {
+          return (
+            <div className="col">
+              <div className="border border-2 border-blue-400">
+                {key + 1} of {value}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
+## 起因
+
+因为 IE 11 不支持 Grid 布局中的 `auto place` 功能, 但是如果我们先用 Grid 实现类似 `bootstrap` 的 layout 功能,
+
+那么这个 `auto place` 是肯定要用到的, 不然你不可能写几十个(可能更多) `grid-area: a;` 对吧.
+
+因此这也就意味着如果你要兼容 `IE 11` 那么这个 tailwind 中的 `Grid` 功能就得找到对应的解决方案
+
+于是乎我们就采用了 [tailwind-bootstrap-grid](https://tailwind-bootstrap-grid.netlify.app/)
+
+如果你之前用过 `bootstrap` 的话那么基本不需要学习就可以使用这个插件
+
+<section className="tw">
+  <Grid />
+</section>
+
+<br />
+
+```html
+<div class="container">
+  <div class="row">
+    <div class="col-24 md:col-12">
+      <div class="border">1 of 2</div>
+    </div>
+    <div class="col-24 md:col-12">
+      <div class="border">2 of 2</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="border">1 of 3</div>
+    </div>
+    <div class="col">
+      <div class="border">2 of 3</div>
+    </div>
+    <div class="col">
+      <div class="border">3 of 3</div>
+    </div>
+  </div>
+</div>
+```
+
+** [更多内容请阅读官方文档](https://tailwind-bootstrap-grid.netlify.app/) **

@@ -1,0 +1,15 @@
+module.exports = {
+  gap: false,
+  columnGap: false,
+  rowGap: false,
+  gridColumn: false,
+  gridColumnEnd: false,
+  gridColumnStart: false,
+  gridRow: false,
+  gridRowEnd: false,
+  gridRowStart: false,
+  gridTemplateColumns: false,
+  gridTemplateRows: false,
+  gridAutoFlow: false,
+  container: false,
+};

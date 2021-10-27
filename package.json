@@ -22,7 +22,7 @@
     "build": "docusaurus build --no-minify && yarn run build:lib && yarn run build:ie11 && yarn run build:move-files",
     "build:lib": "yarn run build:change-tailwind-package && vite build --config scripts/vite.config.ts && yarn run build:type",
     "build:change-tailwind-package": "node scripts/changeTailwindPackage.ts",
-    "build:type": "tsc -p ./scripts/tsconfig.dist.json -emitDeclarationOnly && tsc-alias -p ./scripts/tsconfig.dist.json",
+    "build:type": "tsc -p ./scripts/tsconfig.dist.json -emitDeclarationOnly",
     "build:move-files": "node ./scripts/moveFiles.js",
     "build:ie11": "node ./scripts/ie11.js",
     "serve:review": "docusaurus serve",
